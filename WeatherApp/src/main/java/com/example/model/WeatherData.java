@@ -1,3 +1,5 @@
+package com.example.model;
+
 import java.time.LocalDateTime;
 
 public class WeatherData {
@@ -7,6 +9,10 @@ public class WeatherData {
     private String description;
     private LocalDateTime date;
     private String cityName;
+
+    public WeatherData() {
+        // empty constructor
+    }
 
     // Constructor
     public WeatherData(double temperature, int humidity, double windSpeed, String description, LocalDateTime date, String cityName) {

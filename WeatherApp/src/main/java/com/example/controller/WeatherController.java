@@ -1,8 +1,8 @@
-package src.main.java.org.example.controller;
+package com.example.controller;
 
-import com.example.weatherapp.model.WeatherData;
-import com.example.weatherapp.service.WeatherService;
-import com.example.weatherapp.component.SearchHistory;
+import com.example.model.WeatherData;
+import com.example.Service.WeatherService;
+import com.example.history.SearchHistory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

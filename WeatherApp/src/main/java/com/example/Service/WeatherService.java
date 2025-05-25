@@ -1,6 +1,6 @@
-package com.example.weatherapp.service;
+package com.example.Service;
 
-import com.example.weatherapp.model.WeatherData;
+import com.example.model.WeatherData;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.boot.web.client.RestTemplateBuilder;
