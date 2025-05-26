@@ -6,6 +6,7 @@ import com.example.history.SearchHistory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,16 @@ public class WeatherController {
      */
     @GetMapping("/forecast")
     public ResponseEntity<Map<String, WeatherData>> getForecast(@RequestParam String city) {
-        Map<String, WeatherData> forecast = weatherService.get7DayForecast(city);
-        return ResponseEntity.ok(forecast);
+        List<WeatherData> forecastList = weatherService.get7DayForecast(city);
+
+        Map<String, WeatherData> forecastMap = new LinkedHashMap<>();
+        String[] dayNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+
+        for (int i = 0; i < forecastList.size() && i < dayNames.length; i++) {
+            forecastMap.put(dayNames[i], forecastList.get(i));
+        }
+
+        return ResponseEntity.ok(forecastMap);
     }
+
 }
