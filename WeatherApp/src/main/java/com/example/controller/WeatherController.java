@@ -23,10 +23,6 @@ public class WeatherController {
         this.searchHistory = searchHistory;
     }
 
-    /**
-     * GET /api/weather?city=Nairobi
-     * Fetches current weather for the given city.
-     */
     @GetMapping("/weather")
     public ResponseEntity<WeatherData> getCurrentWeather(@RequestParam String city) {
         searchHistory.addSearch(city); // Track the search
@@ -34,20 +30,13 @@ public class WeatherController {
         return ResponseEntity.ok(data);
     }
 
-    /**
-     * GET /api/search-history
-     * Returns a list of recently searched cities.
-     */
+
     @GetMapping("/search-history")
     public ResponseEntity<List<String>> getSearchHistory() {
         return ResponseEntity.ok(searchHistory.getRecentSearches());
     }
 
-    /**
-     * GET /api/forecast?city=Nairobi
-     * Optional: Returns a basic forecast for the given city (dummy or placeholder).
-     * You can implement this fully later with a ForecastCalendar class.
-     */
+
     @GetMapping("/forecast")
     public ResponseEntity<Map<String, WeatherData>> getForecast(@RequestParam String city) {
         List<WeatherData> forecastList = weatherService.get7DayForecast(city);
