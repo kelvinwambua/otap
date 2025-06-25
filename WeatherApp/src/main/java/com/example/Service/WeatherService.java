@@ -18,7 +18,7 @@ public class WeatherService {
 
     private final String apiKey ="2068715ee6c70f01debfa82701461083";
     private final String currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather";
-    private final String oneCallUrl = "https://api.openweathermap.org/data/3.0/onecall";
+    private final String oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall";
 
     private final RestTemplate restTemplate;
 
