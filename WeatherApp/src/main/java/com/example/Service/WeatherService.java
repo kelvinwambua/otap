@@ -18,7 +18,8 @@ public class WeatherService {
 
     private final String apiKey ="2068715ee6c70f01debfa82701461083";
     private final String currentWeatherUrl = "https://api.openweathermap.org/data/2.5/weather";
-    private final String oneCallUrl = "https://api.openweathermap.org/data/2.5/onecall";
+    private final String forecastUrl = "https://api.openweathermap.org/data/2.5/forecast";
+
 
     private final RestTemplate restTemplate;
 
@@ -38,23 +39,44 @@ public class WeatherService {
     }
 
     public List<WeatherData> get7DayForecast(String city) {
-        // Step 1: Get coordinates from city name
-        String geoUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey;
-        ResponseEntity<String> geoResponse = restTemplate.getForEntity(geoUrl, String.class);
-        JSONArray geoArray = new JSONArray(geoResponse.getBody());
+        String url = forecastUrl + "?q=" + city + "&appid=" + apiKey + "&units=metric";
 
-        if (geoArray.isEmpty()) throw new RuntimeException("City not found");
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            JSONObject json = new JSONObject(response.getBody());
+            JSONArray list = json.getJSONArray("list");
 
-        JSONObject location = geoArray.getJSONObject(0);
-        double lat = location.getDouble("lat");
-        double lon = location.getDouble("lon");
+            List<WeatherData> dailyForecast = new ArrayList<>();
 
-        // Step 2: Use OneCall API to fetch forecast
-        String forecastUrl = oneCallUrl + "?lat=" + lat + "&lon=" + lon + "&exclude=hourly,minutely,alerts,current&units=metric&appid=" + apiKey;
-        ResponseEntity<String> forecastResponse = restTemplate.getForEntity(forecastUrl, String.class);
+            // Pick roughly 1 entry per day at midday (index: 4, 12, 20, 28, 36...)
+            for (int i = 4; i < list.length() && dailyForecast.size() < 5; i += 8) {
+                JSONObject entry = list.getJSONObject(i);
+                JSONObject main = entry.getJSONObject("main");
+                JSONObject wind = entry.getJSONObject("wind");
+                JSONObject weather = entry.getJSONArray("weather").getJSONObject(0);
 
-        return parseForecastResponse(forecastResponse.getBody(), city);
+                WeatherData data = new WeatherData();
+                data.setCityName(city);
+                data.setTemperature(main.getDouble("temp"));
+                data.setHumidity(main.getInt("humidity"));
+                data.setWindSpeed(wind.getDouble("speed"));
+                data.setDescription(weather.getString("description"));
+
+                long timestamp = entry.getLong("dt");
+                data.setDate(LocalDateTime.ofEpochSecond(timestamp, 0, ZoneOffset.UTC));
+
+                dailyForecast.add(data);
+            }
+
+            return dailyForecast;
+
+        } catch (org.springframework.web.client.HttpClientErrorException.Unauthorized e) {
+            throw new RuntimeException("Invalid API key. Please check your OpenWeatherMap key.");
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching forecast: " + e.getMessage());
+        }
     }
+
 
     private WeatherData parseWeatherResponse(String responseBody, String city) {
         JSONObject json = new JSONObject(responseBody);

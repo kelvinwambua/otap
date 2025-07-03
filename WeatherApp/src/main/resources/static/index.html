@@ -1,28 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Tazama Anga Weather App</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>TazamaAnga Weather</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+<div class="container">
+    <header>
+        <h1><span>TazamaAnga</span><span class="highlight">Weather</span></h1>
+        <div class="top-right">
+            <button onclick="goHome()">Back to Home</button>
+            <div class="search-box">
+                <input type="text" id="cityInput" placeholder="Enter city name" />
+                <button onclick="searchWeather()">🔍</button>
+            </div>
+        </div>
+    </header>
 
-<h1>Welcome to Tazama Anga Weather App</h1>
+    <main>
+        <section class="main-weather">
+            <div class="weather-header">
+                <h2 id="cityName">Nairobi</h2>
+                <p>Kenya</p>
+            </div>
+            <div class="weather-info">
+                <div class="temp">
+                    <h1 id="temperature">26°C</h1>
+                    <p id="condition">Broken Clouds</p>
+                </div>
+                <ul>
+                    <li>Feels Like: <span id="feelsLike">25°C</span></li>
+                    <li>Humidity: <span id="humidity">70%</span></li>
+                    <li>Wind: <span id="wind">14 km/h</span></li>
+                    <li>UV Index: <span id="uvIndex">9</span></li>
+                </ul>
+            </div>
+            <div class="extra-info">
+                <p>Pressure: <span id="pressure">1020 hPa</span></p>
+                <p>Visibility: <span id="visibility">10 km</span></p>
+                <p>Sunrise: <span id="sunrise">06:00 AM</span></p>
+                <p>Sunset: <span id="sunset">06:30 PM</span></p>
+                <p class="updated">Updated as of <span id="updated">09:41 AM</span></p>
+            </div>
+        </section>
 
-<input type="text" id="cityInput" placeholder="Enter city name" />
-<button onclick="fetchCurrentWeather()">Current Weather</button>
-<button onclick="fetchForecast()">7-Day Forecast</button>
+        <section class="forecast">
+            <h3>5-Day Forecast</h3>
+            <div class="forecast-cards" id="forecastCards">
+                <!-- JS will fill these cards -->
+            </div>
+        </section>
 
-<div class="section">
-    <h2>Current Weather</h2>
-    <div id="currentWeather" class="card">No data yet.</div>
-</div>
-
-<div class="section">
-    <h2>7-Day Forecast</h2>
-    <div id="forecastContainer"></div>
+        <section class="day-details" id="dayDetails">
+            <!-- Detailed forecast for the selected day -->
+        </section>
+    </main>
 </div>
 
 <script src="script.js"></script>
 </body>
 </html>
+
