@@ -1,8 +1,3 @@
-function goHome() {
-    window.location.href = "home.html";
-}
-
-
 function searchWeather() {
     const city = document.getElementById("cityInput").value;
 
@@ -37,11 +32,11 @@ function searchWeather() {
                 return {
                     day,
                     date: new Date(data.date).toDateString(),
-                    temp: `${Math.round(data.temperature)}°C`,
+                    temperature: `${Math.round(data.temperature)}°C`,
                     low: `Min ${Math.round(data.temperature - 3)}°C`, // just example logic
-                    condition: data.description,
-                    rain: `${data.humidity}%`,
-                    wind: `${Math.round(data.windSpeed)} km/h`
+                    description: data.description,
+                    humidity: `${data.humidity}%`,
+                    windSpeed: `${Math.round(data.windSpeed)} km/h`
                 };
             });
             renderForecast(forecastArray);

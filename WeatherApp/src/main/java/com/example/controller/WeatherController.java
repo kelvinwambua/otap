@@ -42,7 +42,7 @@ public class WeatherController {
         List<WeatherData> forecastList = weatherService.get7DayForecast(city);
 
         Map<String, WeatherData> forecastMap = new LinkedHashMap<>();
-        String[] dayNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        String[] dayNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
         for (int i = 0; i < forecastList.size() && i < dayNames.length; i++) {
             forecastMap.put(dayNames[i], forecastList.get(i));

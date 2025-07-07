@@ -19,7 +19,7 @@ header {
 }
 
 header h1 span.highlight {
-    color: #ff7b54;
+    color: #4facfe;
 }
 
 .search-box {
@@ -35,7 +35,7 @@ header h1 span.highlight {
 
 .search-box button {
     padding: 0.5rem 1rem;
-    background-color: #ff6f61;
+    background-color: #4facfe;
     color: white;
     border: none;
     border-radius: 6px;
