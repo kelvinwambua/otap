@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>org.example</groupId>
+    <groupId>com.example</groupId>
     <artifactId>WeatherApp</artifactId>
     <version>1.0-SNAPSHOT</version>
 
